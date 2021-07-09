@@ -1,3 +1,6 @@
+// Types
+import { IDb } from '../src/types/db.type';
+
 export interface Environment {
   api: {
     isEnabled: boolean;
@@ -5,5 +8,11 @@ export interface Environment {
   };
   jwt: {
     secret: string;
+  };
+  db: IDb;
+  crypto: {
+    algorithm: string;
+    secret: string;
+    bytes: number;
   };
 }

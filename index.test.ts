@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { environment as originalEnvironment } from './environment';
 
 // Mocking environment
@@ -7,13 +9,22 @@ jest.mock('./environment');
 const environment = mocked(originalEnvironment, true);
 environment.api.isEnabled = false;
 
+// Providers
+import { instance, killInstance } from './src/providers/db.provider';
+
 // Tests
-import { sampleTestSuite } from './tests/e2e/sample';
+// import { sampleTestSuite } from './tests/e2e/sample';
+import { planetTestSuite } from './tests/e2e/planet';
 
 describe('sequentially run tests', () => {
-  beforeAll(async (): Promise<void> => {});
+  beforeAll(async (): Promise<void> => {
+    await instance(environment.db);
+  });
 
-  afterAll(async (): Promise<void> => {});
+  afterAll(async (): Promise<void> => {
+    await killInstance();
+  });
 
-  sampleTestSuite();
+  // sampleTestSuite();
+  planetTestSuite();
 });
