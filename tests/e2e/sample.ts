@@ -27,7 +27,7 @@ export const sampleTestSuite = (): void => {
     });
 
     describe('should fail', (): void => {
-      it(`POST ${baseUrl}/signup an existent user with same email`, async (): Promise<void> => {
+      it(`POST ${baseUrl}/ an existent path`, async (): Promise<void> => {
         const response: Response = await request.post(`${baseUrl}/`).send();
         expect(response.status).toBe(404);
       });
