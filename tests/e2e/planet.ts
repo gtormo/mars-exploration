@@ -35,9 +35,48 @@ export const planetTestSuite = (): void => {
 
         expect(response.status).toBe(200);
       });
+
+      it(`Access to created planet`, async (): Promise<void> => {
+        const response: Response = await request.post(`${baseUrl}/access`).send({
+          name: 'Mars',
+          password: 'Hello123456'
+        } as CreatePlanet);
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('token');
+        expect(response.body.token).toMatch(
+          /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/
+        );
+      });
     });
 
     describe('should fail', (): void => {
+      it(`Create a planet with same name`, async (): Promise<void> => {
+        const response: Response = await request.post(`${baseUrl}/`).send({
+          name: "Mars",
+          password: 'HelloWordl123',
+          dimension: {
+            x: 10,
+            y: 10
+          }
+        } as CreatePlanet);
+
+        expect(response.status).toBe(409);
+      });
+
+      it(`Create a planet with same name "lowerCase"`, async (): Promise<void> => {
+        const response: Response = await request.post(`${baseUrl}/`).send({
+          name: "mars",
+          password: 'HelloWordl123',
+          dimension: {
+            x: 10,
+            y: 10
+          }
+        } as CreatePlanet);
+
+        expect(response.status).toBe(409);
+      });
+
       it(`Create a planet without name`, async (): Promise<void> => {
         const response: Response = await request.post(`${baseUrl}/`).send({
           password: 'HelloWordl123',
@@ -48,6 +87,30 @@ export const planetTestSuite = (): void => {
         } as CreatePlanet);
 
         expect(response.status).toBe(413);
+      });
+
+      it(`Access to created planet missing credentials`, async (): Promise<void> => {
+        const response: Response = await request.post(`${baseUrl}/access`).send({} as CreatePlanet);
+
+        expect(response.status).toBe(413);
+      });
+
+      it(`Access to created planet with invalid credentials`, async (): Promise<void> => {
+        const response: Response = await request.post(`${baseUrl}/access`).send({
+          name: 'Mars2',
+          password: 'Hello'
+        } as CreatePlanet);
+
+        expect(response.status).toBe(401);
+      });
+
+      it(`Access to inexistent planet`, async (): Promise<void> => {
+        const response: Response = await request.post(`${baseUrl}/access`).send({
+          name: 'Earth',
+          password: 'Hello123456'
+        } as CreatePlanet);
+
+        expect(response.status).toBe(401);
       });
 
       it(`Create a planet without password`, async (): Promise<void> => {

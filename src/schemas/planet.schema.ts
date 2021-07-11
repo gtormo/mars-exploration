@@ -8,7 +8,8 @@ const schema: mongoose.Schema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     password: { type: Object, required: true },
     dimension: { type: Object, required: true }
