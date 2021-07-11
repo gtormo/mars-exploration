@@ -11,6 +11,7 @@ environment.api.isEnabled = false;
 
 // Providers
 import { instance, killInstance } from './src/providers/db.provider';
+import mongoose from 'mongoose';
 
 // Tests
 // import { sampleTestSuite } from './tests/e2e/sample';
@@ -19,6 +20,7 @@ import { planetTestSuite } from './tests/e2e/planet';
 describe('sequentially run tests', () => {
   beforeAll(async (): Promise<void> => {
     await instance(environment.db);
+    // await mongoose.connection.db.dropDatabase();
   });
 
   afterAll(async (): Promise<void> => {

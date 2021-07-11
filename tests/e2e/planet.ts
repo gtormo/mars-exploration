@@ -3,6 +3,9 @@ import supertest, { Test, SuperTest, Response } from 'supertest';
 import { Server } from 'http';
 import { api } from '../../src/api';
 
+// Types
+import { CreatePlanet } from '../../src/types/planet.type';
+
 export const planetTestSuite = (): void => {
   const baseUrl = '/planet';
 
@@ -24,9 +27,11 @@ export const planetTestSuite = (): void => {
         const response: Response = await request.post(`${baseUrl}/`).send({
           name: 'Mars',
           password: 'Hello123456',
-          latitude: 20,
-          longitude: 30
-        });
+          dimension: {
+            x: 0,
+            y: 50
+          }
+        } as CreatePlanet);
 
         expect(response.status).toBe(200);
       });
@@ -36,9 +41,11 @@ export const planetTestSuite = (): void => {
       it(`Create a planet without name`, async (): Promise<void> => {
         const response: Response = await request.post(`${baseUrl}/`).send({
           password: 'HelloWordl123',
-          latitude: 20,
-          longitude: 30
-        });
+          dimension: {
+            x: 10,
+            y: 10
+          }
+        } as CreatePlanet);
 
         expect(response.status).toBe(413);
       });
@@ -46,9 +53,11 @@ export const planetTestSuite = (): void => {
       it(`Create a planet without password`, async (): Promise<void> => {
         const response: Response = await request.post(`${baseUrl}/`).send({
           name: 'Mars',
-          latitude: 20,
-          longitude: 30
-        });
+          dimension: {
+            x: 20,
+            y: 10
+          }
+        } as CreatePlanet);
 
         expect(response.status).toBe(413);
       });
@@ -63,20 +72,24 @@ export const planetTestSuite = (): void => {
         const response: Response = await request.post(`${baseUrl}/`).send({
           name: 'Mars',
           password: 'HelloWordl123',
-          latitude: -20,
-          longitude: -30
-        });
+          dimension: {
+            x: 0,
+            y: 51
+          }
+        } as CreatePlanet);
 
         expect(response.status).toBe(413);
       });
 
-      it(`Create a planet with invalid coordinates`, async (): Promise<void> => {
+      it(`Create a planet with negative coordinates`, async (): Promise<void> => {
         const response: Response = await request.post(`${baseUrl}/`).send({
           name: 'Mars',
           password: 'HelloWordl123',
-          latitude: 51,
-          longitude: 60
-        });
+          dimension: {
+            x: -10,
+            y: -60
+          }
+        } as CreatePlanet);
 
         expect(response.status).toBe(413);
       });

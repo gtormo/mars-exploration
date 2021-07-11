@@ -6,12 +6,19 @@ import { environment } from './environment';
 // Modules
 import { api } from './src/api';
 
-try {
-  const { port } = environment.api;
+// Providers
+import { instance } from './src/providers/db.provider';
 
-  api.listen(port, (): void => {
-    console.info(`Service listening on 0.0.0.0:${port}`);
-  });
-} catch (error) {
-  console.error(error);
-}
+(async (): Promise<void> => {
+  try {
+    await instance(environment.db);
+
+    const { port } = environment.api;
+
+    api.listen(port, (): void => {
+      console.info(`Service listening on 0.0.0.0:${port}`);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+})();

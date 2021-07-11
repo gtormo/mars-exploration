@@ -1,13 +1,21 @@
-export interface Planet {
+// Types
+import { Document, Types } from 'mongoose';
+import { IEncrypt } from './crypto.type';
+
+export interface PlanetDimension {
+  x: number;
+  y: number;
+}
+
+export interface Planet extends Document {
+  _id: Types.ObjectId;
   name: string;
-  password: string;
-  latitude: number;
-  longitude: number;
+  password: IEncrypt;
+  dimension: PlanetDimension;
 }
 
 export interface CreatePlanet {
   name: Planet['name'];
-  password: Planet['password'];
-  latitude: Planet['latitude'];
-  longitude: Planet['longitude'];
+  password: string;
+  dimension: Planet['dimension'];
 }

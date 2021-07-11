@@ -10,3 +10,10 @@ export const getResponseErrorMessage = (error: ErrorMessage): ErrorMessage => {
     status: get(error, 'status', 500)
   } as ErrorMessage;
 };
+
+export const ejectErrorMessage = ({ status, message }: ErrorMessage): ErrorMessage => {
+  throw {
+    status,
+    message
+  } as ErrorMessage;
+};
