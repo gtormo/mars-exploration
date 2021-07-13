@@ -33,7 +33,7 @@ These packages are required:
 
 ### Node version
 
-- This project has be coded using v14.15.1. However, older versions should be work as well.
+- This project has be coded using v14.17. However, older versions should be work as well.
 
 ### Env Variables
 
