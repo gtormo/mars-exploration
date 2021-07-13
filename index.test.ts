@@ -16,11 +16,13 @@ import mongoose from 'mongoose';
 // Tests
 // import { sampleTestSuite } from './tests/e2e/sample';
 import { planetTestSuite } from './tests/e2e/planet';
+import { robotTestSuite } from './tests/e2e/robot';
 
 describe('sequentially run tests', () => {
   beforeAll(async (): Promise<void> => {
     await instance(environment.db);
-    // await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.db.dropCollection('planets');
+    await mongoose.connection.db.dropCollection('lostrobots');
   });
 
   afterAll(async (): Promise<void> => {
@@ -29,4 +31,5 @@ describe('sequentially run tests', () => {
 
   // sampleTestSuite();
   planetTestSuite();
+  robotTestSuite();
 });
