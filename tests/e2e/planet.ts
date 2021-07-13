@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 // Modules
 import supertest, { Test, SuperTest, Response } from 'supertest';
 import { Server } from 'http';
@@ -28,8 +31,8 @@ export const planetTestSuite = (): void => {
           name: 'Mars',
           password: 'Hello123456',
           dimension: {
-            x: 0,
-            y: 50
+            x: 5,
+            y: 3
           }
         } as CreatePlanet);
 
@@ -47,6 +50,7 @@ export const planetTestSuite = (): void => {
         expect(response.body.token).toMatch(
           /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/
         );
+        process.env.JEST_PLANET_ACCESS_TOKEN = response.body.token;
       });
     });
 

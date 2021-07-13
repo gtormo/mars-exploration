@@ -54,6 +54,7 @@ export const verify = (token: string): Record<string, any> => {
 
     return payload;
   } catch (error) {
+    !get(error, "status", null) && ejectErrorMessage({ status: 401, message: "Token has already expired" })
     throw error;
   }
 };

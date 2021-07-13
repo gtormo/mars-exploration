@@ -15,6 +15,7 @@ export interface Planet extends Document {
 }
 
 export interface CreatePlanet {
+  _id?: string;
   name: Planet['name'];
   password: string;
   dimension: Planet['dimension'];
