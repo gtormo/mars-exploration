@@ -12,7 +12,11 @@
     "start:dev": "ts-node index.ts",
     "dev": "nodemon",
     "build": "tsc",
-    "start": "npm run build && node ./build/index.js"
+    "start": "npm run build && node ./build/index.js",
+    "docker:logs": "docker-compose logs -f api",
+    "docker:start": "docker-compose up -d && npm run docker:logs",
+    "docker:restart": "docker-compose restart && npm run docker:logs",
+    "docker:prune": "docker-compose stop && docker-compose rm -f"
   },
   "repository": {
     "type": "git",
