@@ -1,0 +1,15 @@
+node_modules/
+build/
+.vscode/
+coverage/
+
+.env
+.env.sample
+
+.gitignore
+.prettierrc
+.eslintrc
+README.md
+
+index.test.ts
+tests/
